@@ -536,6 +536,7 @@ nm_openconnect_start_openconnect_binary (NMOpenconnectPlugin *plugin,
 		g_ptr_array_add (openconnect_argv, (gpointer) priv->tun_name);
 	} else {
 		/* TODO: Is this a valid case? See create_persistent_tundev. */
+    _LOGW ("Valid case?");
 	}
 
 	props_disable_udp = nm_setting_vpn_get_data_item (s_vpn, NM_OPENCONNECT_KEY_DISABLE_UDP);
@@ -554,7 +555,9 @@ nm_openconnect_start_openconnect_binary (NMOpenconnectPlugin *plugin,
 		 * However, it is still not safe to run untrusted scripts provided by the user.
 		 *
 		 * This needs a different solution, for now, just log a warning. */
+    _LOGW ("Testing now");
 		if (priv->tun_name) {
+      _LOGW ("Running csd wrapper");
 			/* Replicate the CSD parameters used in the authentication phase, for
 			   supported protocols which may need to invoke the security trojan ("CSD")
 			   in the tunnel/connection phase. */
