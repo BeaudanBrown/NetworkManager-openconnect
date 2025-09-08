@@ -555,20 +555,15 @@ nm_openconnect_start_openconnect_binary (NMOpenconnectPlugin *plugin,
 		 * However, it is still not safe to run untrusted scripts provided by the user.
 		 *
 		 * This needs a different solution, for now, just log a warning. */
-    _LOGW ("Testing now");
-		if (priv->tun_name) {
+
       _LOGW ("Running csd wrapper");
-			/* Replicate the CSD parameters used in the authentication phase, for
-			   supported protocols which may need to invoke the security trojan ("CSD")
-			   in the tunnel/connection phase. */
-			g_ptr_array_add (openconnect_argv, (gpointer) "--csd-wrapper");
-			g_ptr_array_add (openconnect_argv, (gpointer) props_csd_wrapper);
-			g_ptr_array_add (openconnect_argv, (gpointer) "--csd-user");
-			g_ptr_array_add (openconnect_argv, (gpointer) nm_sprintf_buf (csd_user_arg, "%d", gl.tun_owner));
-		} else {
-			_LOGW ("openconnect won't call csd-wrapper script because it cannot drop privileges to user \"%s\"",
-			       NM_OPENCONNECT_USER);
-		}
+		/* Replicate the CSD parameters used in the authentication phase, for
+		   supported protocols which may need to invoke the security trojan ("CSD")
+		   in the tunnel/connection phase. */
+		g_ptr_array_add (openconnect_argv, (gpointer) "--csd-wrapper");
+		g_ptr_array_add (openconnect_argv, (gpointer) props_csd_wrapper);
+		g_ptr_array_add (openconnect_argv, (gpointer) "--csd-user");
+		g_ptr_array_add (openconnect_argv, (gpointer) nm_sprintf_buf (csd_user_arg, "%d", gl.tun_owner));
 	}
 
 	g_ptr_array_add (openconnect_argv, (gpointer) props_vpn_gw);
